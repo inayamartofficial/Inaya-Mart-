@@ -642,7 +642,7 @@ const { data, error } = await supabaseClient
 
 if (error) {
     console.error("Supabase Error:", error);
-    alert("❌ Order save হয়নি। আবার চেষ্টা করুন।");
+    alert("Error: " + error.message);
     isSubmitting = false;
     return;
 }

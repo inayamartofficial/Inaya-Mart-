@@ -4,35 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inaya Mart | Minimalist Luxury E-Commerce</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        gold: {
-                            light: '#F4F0EA',
-                            DEFAULT: '#C5A880',
-                            dark: '#A38760',
-                            premium: '#D4AF37'
-                        },
-                        luxury: {
-                            black: '#111111',
-                            darkGray: '#1A1A1A',
-                            lightBg: '#FAF9F6',
-                            beige: '#F5F1EB',
-                            nude: '#E8DFD8'
-                        }
-                    },
-                    fontFamily: {
-                        serif: ['Playfair Display', 'serif'],
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -96,7 +68,7 @@
         }
     </style>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
 </head>
 <body class="bg-luxury-lightBg text-luxury-black font-sans antialiased">
@@ -447,19 +419,20 @@
     </footer>
 
     <!-- Interactive Shopping Logic & Animations JavaScript Core -->
-    <script>
+<script>
     // Supabase Configuration
 
-const SUPABASE_URL = "https://sqrxyxldarqzygaxzarr.supabase.co";
+    const SUPABASE_URL = "https://sqrxyxldarqzygaxzarr.supabase.co";
 
-const SUPABASE_KEY = "sb_publishable_vIDIv6GJYgmou99PnrMb5A_y2l7s_-9";
+    const SUPABASE_KEY = "sb_publishable_vIDIv6GJYgmou99PnrMb5A_y2l7s_-9";
 
-const supabase = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-        let cart = [];
-let shippingFee = 60;
+    const supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+    let cart = [];
+    let shippingFee = 80;
 
 // Prevent duplicate order submission
 let isSubmitting = false;
@@ -663,7 +636,7 @@ const ordersData = cart.map(item => ({
     "Order status": "Pending"
 }));
 
-const { data, error } = await supabase
+const { data, error } = await supabaseClient
     .from('orders')
     .insert(ordersData);
 
@@ -718,7 +691,7 @@ isSubmitting = false;
         0
     );
 
-    const { error } = await supabase
+    const { error } = await supabaseClient
         .from('abandoned_carts')
         .insert({
             "Customer name": name,
@@ -753,5 +726,34 @@ document.getElementById('cust-address').addEventListener('input', startAbandoned
 renderCart();
 
 </script>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            light: '#F4F0EA',
+                            DEFAULT: '#C5A880',
+                            dark: '#A38760',
+                            premium: '#D4AF37'
+                        },
+                        luxury: {
+                            black: '#111111',
+                            darkGray: '#1A1A1A',
+                            lightBg: '#FAF9F6',
+                            beige: '#F5F1EB',
+                            nude: '#E8DFD8'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>

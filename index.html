@@ -115,9 +115,11 @@
 
             <!-- Brand Identity Logo (Center) -->
             <div class="text-center">
-                <a href="#" class="font-serif text-2xl sm:text-3xl tracking-widest uppercase font-medium block">
-                    Inaya Mart
-                </a>
+                <a href="#">
+    <img src="images/logo.png"
+         alt="Inaya Mart Logo"
+         class="h-14 mx-auto">
+</a>
                 <span class="text-[9px] tracking-[0.3em] uppercase text-gold block -mt-1 font-medium">Dhaka · China · BD</span>
             </div>
 
@@ -133,26 +135,42 @@
         </div>
     </header>
 
-    <!-- Luxury Hero Section -->
-    <section class="relative bg-luxury-beige overflow-hidden min-h-[70vh] flex items-center">
-        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#C5A880_1px,transparent_1px)] [background-size:16px_16px]"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 w-full">
-            <div class="max-w-2xl">
-                <span class="text-xs uppercase tracking-[0.4em] text-gold font-semibold block mb-4 reveal-up">New Season Arrival</span>
-                <h1 class="font-serif text-4xl sm:text-6xl text-luxury-black tracking-tight leading-tight mb-6 reveal-up delay-1">
-                    Elegance in <br><span class="italic font-normal text-gold">Every Single Choice</span>
-                </h1>
-                <p class="text-sm sm:text-base text-gray-600 font-light leading-relaxed mb-8 max-w-lg reveal-up delay-2">
-                    Experience our meticulously curated Premium Modest Outfits, Handpicked Organic Essentials, and Next-Gen Electronic Supplies. Crafted for those who cherish luxury minimalism.
-                </p>
-                <div class="reveal-up delay-3">
-                    <a href="#modest" class="inline-block bg-luxury-black text-white text-xs tracking-widest uppercase font-medium px-8 py-4 border border-luxury-black hover:bg-transparent hover:text-luxury-black transition-all duration-300">
-                        Explore Collections
-                    </a>
-                </div>
+<!-- Luxury Hero Section -->
+<section class="relative overflow-hidden min-h-[70vh] flex items-center">
+
+    <!-- Hero Banner Image -->
+    <img src="images/banner.jpg"
+         alt="Inaya Mart Banner"
+         class="absolute inset-0 w-full h-full object-cover">
+
+    <!-- Dark Overlay -->
+    <div class="absolute inset-0 bg-black/40"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 w-full">
+        <div class="max-w-2xl">
+            <span class="text-xs uppercase tracking-[0.4em] text-gold font-semibold block mb-4 reveal-up">
+                New Season Arrival
+            </span>
+
+            <h1 class="font-serif text-4xl sm:text-6xl text-white tracking-tight leading-tight mb-6 reveal-up delay-1">
+                Elegance in <br>
+                <span class="italic font-normal text-gold">Every Single Choice</span>
+            </h1>
+
+            <p class="text-sm sm:text-base text-gray-200 font-light leading-relaxed mb-8 max-w-lg reveal-up delay-2">
+                Experience our meticulously curated Premium Modest Outfits, Handpicked Organic Essentials, and Next-Gen Electronic Supplies.
+            </p>
+
+            <div class="reveal-up delay-3">
+                <a href="#modest"
+                   class="inline-block bg-gold text-black text-xs tracking-widest uppercase font-medium px-8 py-4 hover:bg-white transition-all duration-300">
+                    Explore Collections
+                </a>
             </div>
         </div>
-    </section>
+    </div>
+
+</section>
 
     <!-- Multi-Category Section -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -531,7 +549,20 @@
             const address = document.getElementById('cust-address').value.trim();
 
             if (!name || !phone || !address) {
-                alert('Doya kore checkout complete korer jonno shob tatthya thikbhabe din.');
+                alert(
+`⚠️ অসম্পূর্ণ তথ্য
+
+অর্ডার সম্পন্ন করতে নিচের তথ্যগুলো অবশ্যই পূরণ করুন।
+
+👤  পূর্ণ নাম
+📞 মোবাইল নম্বর
+📍 সম্পূর্ণ ডেলিভারি ঠিকানা
+
+সব তথ্য পূরণ করার পর আবার "Confirm Order" এ ক্লিক করুন।
+
+💛 ধন্যবাদ,
+Inaya Mart`
+);
                 return;
             }
 

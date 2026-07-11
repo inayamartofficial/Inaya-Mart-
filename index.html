@@ -563,10 +563,15 @@ let isSubmitting = false;
 
         function showOrderForm() {
 
-    alert("showOrderForm is working");
+    const form = document.getElementById("order-form");
+    const btn = document.getElementById("checkout-btn");
 
-    document.getElementById('checkout-btn').classList.add('hidden');
-    document.getElementById('order-form').classList.remove('hidden');
+    alert(form);
+
+    form.classList.remove("hidden");
+    form.style.display = "block";
+
+    btn.style.display = "none";
 }
 
         function submitOrder() {

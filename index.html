@@ -553,53 +553,39 @@ function updateQuantity(name, amount) {
     btn.style.display = "none";
 }
 
-        async function submitOrder() {
-
+        // ১. অর্ডার সাবমিট ফাংশন
+async function submitOrder() {
     if (isSubmitting) return;
     isSubmitting = true;
 
     const name = document.getElementById('cust-name').value.trim();
     const phone = document.getElementById('cust-phone').value.trim();
     const address = document.getElementById('cust-address').value.trim();
+    
+    // ডেলিভারি ফি ডাইনামিকলি ক্যালকুলেট করা হচ্ছে[span_1](start_span)[span_1](end_span)
+    const locationSelect = document.getElementById('cust-location');
+    const deliveryFee = (locationSelect && locationSelect.value === 'outside') ? 150 : 80;
 
-
+    // ভ্যালিডেশন[span_2](start_span)[span_2](end_span)
     if (!name || !phone || !address) {
-
+        alert("⚠️ অসম্পূর্ণ তথ্য! অনুগ্রহ করে নাম, মোবাইল নম্বর এবং ঠিকানা সঠিকভাবে পূরণ করুন।");
         isSubmitting = false;
-
-        alert(
-`⚠️ অসম্পূর্ণ তথ্য
-
-অর্ডার সম্পন্ন করতে নিচের তথ্যগুলো অবশ্যই পূরণ করুন।
-
-👤 পূর্ণ নাম
-📞 মোবাইল নম্বর
-📍 সম্পূর্ণ ডেলিভারি ঠিকানা`
-        );
-
         return;
     }
 
-
-    // ✅ এখানে validation code বসবে
-
     const namePattern = /^[A-Za-z\u0980-\u09FF\s]{3,}$/;
-
     if (!namePattern.test(name)) {
         alert("⚠️ সঠিক নাম লিখুন");
         isSubmitting = false;
         return;
     }
 
-
     const phonePattern = /^01[3-9]\d{8}$/;
-
     if (!phonePattern.test(phone)) {
         alert("⚠️ সঠিক ১১ সংখ্যার মোবাইল নম্বর দিন");
         isSubmitting = false;
         return;
     }
-
 
     if (address.length < 10) {
         alert("⚠️ সম্পূর্ণ ঠিকানা লিখুন");
@@ -607,83 +593,57 @@ function updateQuantity(name, amount) {
         return;
     }
 
-
     if (cart.length === 0) {
-        alert("⚠️ Cart খালি");
+        alert("⚠️ কার্ট খালি!");
         isSubmitting = false;
         return;
     }
 
+    // অর্ডার ডাটা প্রস্তুত করা[span_3](start_span)[span_3](end_span)
+    const randomOrderId = 'IM-' + Math.floor(10000 + Math.random() * 90000);
+    const ordersData = cart.map(item => ({
+        "Order Id": randomOrderId,
+        "Customer name": name,
+        "Phone": phone,
+        "Address": address,
+        "Product name": item.name,
+        "Product id": item.id,
+        "Quantity": item.quantity,
+        "Unit price": item.price,
+        "Total price": (item.price * item.quantity) + deliveryFee,
+        "delivery_fee": deliveryFee, // এখন এটি সঠিকভাবে কাজ করবে
+        "Payment method": document.getElementById('payment-method')?.value || "COD",
+        "Order status": "Pending"
+    }));
 
-    // এখান থেকে তোমার Supabase order save code শুরু হবে
+    // Supabase-এ ইনসার্ট করা[span_4](start_span)[span_4](end_span)
+    const { data, error } = await supabaseClient.from('orders').insert(ordersData);
 
-// Generate high-end randomized order attributes
-const randomOrderId = 'IM-' + Math.floor(10000 + Math.random() * 90000);
+    if (error) {
+        console.error("Supabase Error:", error);
+        alert("অর্ডার সেভ করতে সমস্যা হয়েছে: " + error.message);
+        isSubmitting = false;
+        return;
+    }
 
+    // অর্ডার সফল হলে UI আপডেট[span_5](start_span)[span_5](end_span)
+    toggleCart(false);
+    document.getElementById('display-order-id').innerText = '#' + randomOrderId;
+    document.getElementById('display-order-link').innerText = `inayamart.com/track?id=${randomOrderId}`;
+    document.getElementById('success-modal').classList.remove('hidden');
 
-// Save order to Supabase
-const ordersData = cart.map(item => ({
-    "Order Id": randomOrderId,
-    "Customer name": name,
-    "Phone": phone,
-    "Address": address,
-    "Product name": item.name,
-    "Product id": item.id,
-    "Quantity": item.quantity,
-    "Unit price": item.price,
-    "Total price": (item.price * item.quantity) + deliveryFee,
-    
-    // ডাটাবেজের কলামের নাম delivery_fee তাই কোডেও ঠিক এটাই রাখতে হবে:
-    "delivery_fee": deliveryFee, 
-    
-    "Payment method": document.getElementById('payment-method')?.value || "COD",
-    "Order status": "Pending"
-}));
+    // কার্ট এবং ইনপুট খালি করা
+    cart = [];
+    renderCart();
+    document.getElementById('cust-name').value = '';
+    document.getElementById('cust-phone').value = '';
+    document.getElementById('cust-address').value = '';
 
-
-const { data, error } = await supabaseClient
-    .from('orders')
-    .insert(ordersData);
-
-if (error) {
-    console.error("Supabase Error:", error);
-    alert("Error: " + error.message);
     isSubmitting = false;
-    return;
 }
 
-console.log("Order Saved:", data);
-
-// Tracking URL
-const mockTrackingUrl = 'https://inayamart.com/track?id=' + randomOrderId;
-
-
-// Show success modal
-document.getElementById('display-order-id').innerText = '#' + randomOrderId;
-document.getElementById('display-order-link').href = mockTrackingUrl;
-document.getElementById('display-order-link').innerText = `inayamart.com/track?id=${randomOrderId}`;
-
-// Open success popup
-toggleCart(false);
-
-const successModal = document.getElementById('success-modal');
-successModal.classList.remove('hidden');
-
-// Clear cart
-cart = [];
-renderCart();
-
-// Reset input values
-document.getElementById('cust-name').value = '';
-document.getElementById('cust-phone').value = '';
-document.getElementById('cust-address').value = '';
-
-// Allow next order
-isSubmitting = false;
-}
-
-     async function saveAbandonedCart() {
-
+// ২. পরিত্যক্ত কার্ট (Abandoned Cart) সেভ করার ফাংশন[span_6](start_span)[span_6](end_span)
+async function saveAbandonedCart() {
     const name = document.getElementById('cust-name').value.trim();
     const phone = document.getElementById('cust-phone').value.trim();
     const address = document.getElementById('cust-address').value.trim();
@@ -691,44 +651,37 @@ isSubmitting = false;
     if (!name && !phone && !address) return;
     if (cart.length === 0) return;
 
-    const totalPrice = cart.reduce(
-        (sum, item) => sum + (item.price * item.quantity),
-        0
-    );
+    const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-    const { error } = await supabaseClient
-        .from('abandoned_carts')
-        .insert({
-            "Customer name": name,
-            "Phone": phone,
-            "Address": address,
-            "Cart data": cart,
-            "Total price": totalPrice,
-            "Status": "Pending"
-        });
+    const { error } = await supabaseClient.from('abandoned_carts').insert({
+        "Customer name": name,
+        "Phone": phone,
+        "Address": address,
+        "Cart data": cart,
+        "Total price": totalPrice,
+        "Status": "Pending"
+    });
 
-    if (error) {
-        console.error(error);
-    }
+    if (error) console.error("Abandoned Cart Error:", error);
 }
 
+// ৩. টাইমার এবং ইভেন্ট লিসেনার[span_7](start_span)[span_7](end_span)
 function startAbandonedTimer() {
-    clearTimeout(abandonedTimer);
-
-    abandonedTimer = setTimeout(() => {
-        saveAbandonedCart();
-    }, 10000);
-}
-
-        function closeSuccessModal() {
-    document.getElementById('success-modal').classList.add('hidden');
+    clearTimeout(window.abandonedTimer);
+    window.abandonedTimer = setTimeout(saveAbandonedCart, 10000);
 }
 
 document.getElementById('cust-name').addEventListener('input', startAbandonedTimer);
 document.getElementById('cust-phone').addEventListener('input', startAbandonedTimer);
 document.getElementById('cust-address').addEventListener('input', startAbandonedTimer);
 
+// ৪. ক্লোজ ফাংশন[span_8](start_span)[span_8](end_span)
+function closeSuccessModal() {
+    document.getElementById('success-modal').classList.add('hidden');
+}
+
 renderCart();
+
 
 </script>
     <!-- Tailwind CSS CDN -->
@@ -763,20 +716,32 @@ renderCart();
     
    <script>
     function updateTotalCosts() {
-        // ১. আপনার সাবটোটাল ভ্যালু সংগ্রহ করুন
-        const subtotalValue = 2450; 
+    // ১. সাবটোটাল
+    const subtotalValue = 2450; 
 
-        // ২. ডেলিভারি চার্জ নির্ধারণ করুন
-        const location = document.getElementById('cust-location').value;
-        const delivery_fee = (location === 'inside') ? 80 : 150;
+    // ২. লোকেশন চেক করুন (যদি না থাকে তবে 'inside' ধরুন)
+    const locationElement = document.getElementById('cust-location');
+    const location = locationElement ? locationElement.value : 'inside';
+    
+    // ৩. ডেলিভারি চার্জ নির্ধারণ
+    const delivery_fee = (location === 'inside') ? 80 : 150;
 
-        // ৩. UI আপডেট করুন
-        document.getElementById('cart-delivery').innerText = '৳ ' + delivery_fee + ' BDT';
-
-        // ৪. টোটাল অ্যামাউন্ট আপডেট করুন
-        const total = subtotalValue + delivery_fee;
-        document.getElementById('cart-total').innerText = '৳ ' + total + ' BDT';
+    // ৪. UI আপডেট করুন (এলিমেন্ট আছে কিনা চেক করে)
+    const deliveryElement = document.getElementById('cart-delivery');
+    if (deliveryElement) {
+        deliveryElement.innerText = '৳ ' + delivery_fee + ' BDT';
     }
+
+    const totalElement = document.getElementById('cart-total');
+    if (totalElement) {
+        const total = subtotalValue + delivery_fee;
+        totalElement.innerText = '৳ ' + total + ' BDT';
+    }
+}
+
+// পেজ লোড হওয়ার পর রান করুন
+document.addEventListener('DOMContentLoaded', updateTotalCosts);
+
 
     // পেজ লোড হওয়ার সময় একবার রান করার জন্য
     window.onload = updateTotalCosts;

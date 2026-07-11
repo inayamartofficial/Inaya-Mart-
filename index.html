@@ -475,7 +475,10 @@ let isSubmitting = false;
         }
 
         function addToCart(name, price) {
-            const existingItem = cart.find(item => item.name === name);
+
+    console.log("Add to cart:", name);
+
+    const existingItem = cart.find(item => item.name === name);
             if (existingItem) {
                 existingItem.quantity += 1;
             } else {
@@ -624,8 +627,11 @@ isSubmitting = false;
 }
 
         function closeSuccessModal() {
-            document.getElementById('success-modal').classList.add('hidden');
-        }
-    </script>
+    document.getElementById('success-modal').classList.add('hidden');
+}
+
+renderCart();
+
+</script>
 </body>
 </html>

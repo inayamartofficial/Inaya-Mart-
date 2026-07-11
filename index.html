@@ -631,10 +631,15 @@ const ordersData = cart.map(item => ({
     "Product id": item.id,
     "Quantity": item.quantity,
     "Unit price": item.price,
-    "Total price": item.price * item.quantity,
+    "Total price": (item.price * item.quantity) + deliveryFee,
+    
+    // ডাটাবেজের কলামের নাম delivery_fee তাই কোডেও ঠিক এটাই রাখতে হবে:
+    "delivery_fee": deliveryFee, 
+    
     "Payment method": document.getElementById('payment-method')?.value || "COD",
     "Order status": "Pending"
 }));
+
 
 const { data, error } = await supabaseClient
     .from('orders')

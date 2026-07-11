@@ -755,5 +755,26 @@ renderCart();
             }
         }
     </script>
+    
+   <script>
+    function updateTotalCosts() {
+        // ১. আপনার সাবটোটাল ভ্যালু সংগ্রহ করুন
+        const subtotalValue = 2450; 
+
+        // ২. ডেলিভারি চার্জ নির্ধারণ করুন
+        const location = document.getElementById('cust-location').value;
+        const deliveryFee = (location === 'inside') ? 80 : 150;
+
+        // ৩. UI আপডেট করুন
+        document.getElementById('cart-delivery').innerText = '৳ ' + deliveryFee + ' BDT';
+
+        // ৪. টোটাল অ্যামাউন্ট আপডেট করুন
+        const total = subtotalValue + deliveryFee;
+        document.getElementById('cart-total').innerText = '৳ ' + total + ' BDT';
+    }
+
+    // পেজ লোড হওয়ার সময় একবার রান করার জন্য
+    window.onload = updateTotalCosts;
+</script>
 </body>
-</html>
+</html> 

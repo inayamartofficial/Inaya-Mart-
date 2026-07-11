@@ -1,347 +1,627 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Inaya Mart | Minimalist Luxury E-Commerce</title>
-<!-- Tailwind CSS CDN -->
-<script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
-<!-- Supabase CDN -->
-<script src="[https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2](https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2)"></script>
-<script>
-tailwind.config = {
-theme: {
-extend: {
-colors: {
-gold: {
-light: '#F4F0EA',
-DEFAULT: '#C5A880',
-dark: '#A38760',
-premium: '#D4AF37'
-},
-luxury: {
-black: '#111111',
-darkGray: '#1A1A1A',
-lightBg: '#FAF9F6',
-beige: '#F5F1EB',
-nude: '#E8DFD8'
-}
-},
-fontFamily: {
-serif: ['Playfair Display', 'serif'],
-sans: ['Inter', 'sans-serif'],
-}
-}
-}
-}
-</script>
-<!-- Google Fonts -->
-<link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-<link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-<link href="[https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap)" rel="stylesheet">
-<style>
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #FAF9F6; }
-::-webkit-scrollbar-thumb { background: #C5A880; border-radius: 3px; }
-body { opacity: 0; animation: pageFadeIn 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-@keyframes pageFadeIn { to { opacity: 1; } }
-.reveal-up { opacity: 0; transform: translateY(30px); animation: revealItem 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-.delay-1 { animation-delay: 0.2s; } .delay-2 { animation-delay: 0.4s; } .delay-3 { animation-delay: 0.6s; }
-@keyframes revealItem { to { opacity: 1; transform: translateY(0); } }
-.checkmark-circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 2; stroke: #C5A880; fill: none; animation: strokeArc 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards; }
-.checkmark-kick { transform-origin: 50% 50%; stroke-dasharray: 48; stroke-dashoffset: 48; animation: strokeArc 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards; }
-@keyframes strokeArc { to { stroke-dashoffset: 0; } }
-.blur-premium { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-.toast { position: fixed; bottom: 20px; right: 20px; padding: 16px 24px; background: #111; color: #fff; z-index: 100; border-radius: 4px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transform: translateY(100px); transition: transform 0.3s ease; }
-.toast.show { transform: translateY(0); }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inaya Mart | Minimalist Luxury E-Commerce</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            light: '#F4F0EA',
+                            DEFAULT: '#C5A880',
+                            dark: '#A38760',
+                            premium: '#D4AF37'
+                        },
+                        luxury: {
+                            black: '#111111',
+                            darkGray: '#1A1A1A',
+                            lightBg: '#FAF9F6',
+                            beige: '#F5F1EB',
+                            nude: '#E8DFD8'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom Scrollbar styling */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #FAF9F6; }
+        ::-webkit-scrollbar-thumb { background: #C5A880; border-radius: 3px; }
+
+        /* Entry Smooth Animation */
+        body {
+            opacity: 0;
+            animation: pageFadeIn 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+        @keyframes pageFadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Staggered Content Reveal Animation */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: revealItem 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        @keyframes revealItem {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Success Checkmark Animation Elements */
+        .checkmark-circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke: #C5A880;
+            fill: none;
+            animation: strokeArc 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        .checkmark-kick {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: strokeArc 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+        }
+        @keyframes strokeArc {
+            to { stroke-dashoffset: 0; }
+        }
+        
+        /* Blur background utility for premium feel */
+        .blur-premium {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 </head>
 <body class="bg-luxury-lightBg text-luxury-black font-sans antialiased">
-<div id="toast" class="toast hidden text-xs uppercase tracking-widest"></div>
-<div class="bg-luxury-black text-white text-xs tracking-widest py-2.5 text-center uppercase font-medium border-b border-gold/20">
-Premium Modest Collection & Organic Goods | Shipping Worldwide from BD
-</div>
-<header class="sticky top-0 z-40 bg-luxury-lightBg/80 blur-premium border-b border-luxury-beige transition-all duration-300">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 relative flex items-center">
-<nav class="hidden md:flex space-x-8 text-xs tracking-widest uppercase font-medium">
-<a href="#modest" class="hover:text-gold transition-colors duration-300 text-luxury-black">Modest Wear</a>
-<a href="#organic" class="hover:text-gold transition-colors duration-300 text-luxury-black">Organic Goods</a>
-<a href="#electronics" class="hover:text-gold transition-colors duration-300 text-luxury-black font-normal">Electronics</a>
-</nav>
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-luxury-black text-white text-xs tracking-widest py-2.5 text-center uppercase font-medium border-b border-gold/20">
+        Premium Modest Collection & Organic Goods | Shipping Worldwide from BD
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-luxury-lightBg/80 blur-premium border-b border-luxury-beige transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 relative flex items-center">
+            <!-- Navigation Links (Left) -->
+            <nav class="hidden md:flex space-x-8 text-xs tracking-widest uppercase font-medium">
+                <a href="#modest" class="hover:text-gold transition-colors duration-300 text-luxury-black">Modest Wear</a>
+                <a href="#organic" class="hover:text-gold transition-colors duration-300 text-luxury-black">Organic Goods</a>
+                <a href="#electronics" class="hover:text-gold transition-colors duration-300 text-luxury-black font-normal">Electronics</a>
+            </nav>
+
+            <!-- Brand Identity Logo -->
 <div class="absolute left-1/2 -translate-x-1/2 text-center">
-<a href="#">
-<img src="logo.png" alt="Inaya Mart Logo" class="h-12 md:h-14 w-auto object-contain mx-auto">
-</a>
-<span class="text-[9px] tracking-[0.3em] uppercase text-gold block mt-1">DHAKA • CHINA • BD</span>
+    <a href="#">
+        <img src="logo.png"
+             alt="Inaya Mart Logo"
+             class="h-12 md:h-14 w-auto object-contain mx-auto">
+    </a>
+
+    <span class="text-[9px] tracking-[0.3em] uppercase text-gold block mt-1">
+        DHAKA • CHINA • BD
+    </span>
 </div>
-<div class="flex items-center">
-<button onclick="toggleCart(true)" class="relative p-2 text-luxury-black hover:text-gold transition-colors duration-300 focus:outline-none">
-<svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-</svg>
-<span id="cart-count" class="absolute top-0 right-0 bg-luxury-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-luxury-lightBg">0</span>
-</button>
-</div>
-</div>
-</header>
+
+            <!-- Cart Trigger Menu (Right) -->
+            <div class="flex items-center">
+                <button onclick="toggleCart(true)" class="relative p-2 text-luxury-black hover:text-gold transition-colors duration-300 focus:outline-none">
+                    <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                    </svg>
+                    <span id="cart-count" class="absolute top-0 right-0 bg-luxury-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-luxury-lightBg">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+<!-- Luxury Hero Section -->
 <section class="relative overflow-hidden min-h-[70vh] flex items-center">
-<img src="banner.jpg" alt="Inaya Mart Banner" class="absolute inset-0 w-full h-full object-cover">
-<div class="absolute inset-0 bg-black/40"></div>
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 w-full">
-<div class="max-w-2xl">
-<span class="text-xs uppercase tracking-[0.4em] text-gold font-semibold block mb-4 reveal-up">New Season Arrival</span>
-<h1 class="font-serif text-4xl sm:text-6xl text-white tracking-tight leading-tight mb-6 reveal-up delay-1">Elegance in 
-<span class="italic font-normal text-gold">Every Single Choice</span></h1>
-<p class="text-sm sm:text-base text-gray-200 font-light leading-relaxed mb-8 max-w-lg reveal-up delay-2">Experience our meticulously curated Premium Modest Outfits, Handpicked Organic Essentials, and Next-Gen Electronic Supplies.</p>
-<div class="reveal-up delay-3"><a href="#modest" class="inline-block bg-gold text-black text-xs tracking-widest uppercase font-medium px-8 py-4 hover:bg-white transition-all duration-300">Explore Collections</a></div>
-</div>
-</div>
+
+    <!-- Hero Banner Image -->
+    <img src="banner.jpg"
+         alt="Inaya Mart Banner"
+         class="absolute inset-0 w-full h-full object-cover">
+
+    <!-- Dark Overlay -->
+    <div class="absolute inset-0 bg-black/40"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 w-full">
+        <div class="max-w-2xl">
+            <span class="text-xs uppercase tracking-[0.4em] text-gold font-semibold block mb-4 reveal-up">
+                New Season Arrival
+            </span>
+
+            <h1 class="font-serif text-4xl sm:text-6xl text-white tracking-tight leading-tight mb-6 reveal-up delay-1">
+                Elegance in <br>
+                <span class="italic font-normal text-gold">Every Single Choice</span>
+            </h1>
+
+            <p class="text-sm sm:text-base text-gray-200 font-light leading-relaxed mb-8 max-w-lg reveal-up delay-2">
+                Experience our meticulously curated Premium Modest Outfits, Handpicked Organic Essentials, and Next-Gen Electronic Supplies.
+            </p>
+
+            <div class="reveal-up delay-3">
+                <a href="#modest"
+                   class="inline-block bg-gold text-black text-xs tracking-widest uppercase font-medium px-8 py-4 hover:bg-white transition-all duration-300">
+                    Explore Collections
+                </a>
+            </div>
+        </div>
+    </div>
+
 </section>
-<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-<div id="modest" class="mb-24">
-<div class="flex flex-col md:flex-row md:items-end justify-between border-b border-luxury-beige pb-6 mb-10">
-<div>
-<span class="text-xs uppercase tracking-widest text-gold font-semibold block mb-1">01 / Focus Category</span>
-<h2 class="font-serif text-2xl sm:text-3xl tracking-wide uppercase">Premium Modest Collection</h2>
+
+    <!-- Multi-Category Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        
+        <!-- Section 1: Modest Fashion Category -->
+        <div id="modest" class="mb-24">
+            <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-luxury-beige pb-6 mb-10">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-gold font-semibold block mb-1">01 / Focus Category</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl tracking-wide uppercase">Premium Modest Collection</h2>
+                </div>
+                <p class="text-xs text-gray-500 font-light max-w-xs mt-2 md:mt-0">High-end craftsmanship, breathable luxury fabrics, designed elegant fits.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product 1 -->
+                <div class="group bg-white border border-luxury-beige p-4 transition-all duration-300 hover:shadow-sm">
+                    <div class="aspect-[3/4] overflow-hidden">
+    <img src="images/abaya.jpg"
+         alt="Royal Georgette Premium Abaya"
+         class="w-full h-full object-cover">
 </div>
-<p class="text-xs text-gray-500 font-light max-w-xs mt-2 md:mt-0">High-end craftsmanship, breathable luxury fabrics, designed elegant fits.</p>
+                    <h3 class="font-serif text-base text-luxury-black tracking-wide">Royal Georgette Premium Abaya</h3>
+                    <p class="text-xs text-gold font-medium mt-1">৳ 2,450 BDT</p>
+                    <button onclick="addToCart('Royal Georgette Premium Abaya', 2450)" class="w-full mt-4 bg-luxury-lightBg border border-luxury-beige text-luxury-black text-xs uppercase tracking-widest font-medium py-2.5 hover:bg-luxury-black hover:text-white hover:border-luxury-black transition-all duration-300">
+                        Add To Cart
+                    </button>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="group bg-white border border-luxury-beige p-4 transition-all duration-300 hover:shadow-sm">
+                    <div class="aspect-[3/4] w-full mb-4 overflow-hidden">
+    <img src="images/hijab.jpg"
+         alt="Luxury Linen Hijab Collection"
+         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-<div class="group bg-white border border-luxury-beige p-4 transition-all duration-300 hover:shadow-sm">
-<div class="aspect-[3/4] overflow-hidden"><img src="images/abaya.jpg" alt="Royal Georgette Premium Abaya" class="w-full h-full object-cover"></div>
-<h3 class="font-serif text-base text-luxury-black tracking-wide">Royal Georgette Premium Abaya</h3>
-<p class="text-xs text-gold font-medium mt-1">৳ 2,450 BDT</p>
-<button onclick="addToCart('Royal Georgette Premium Abaya', 2450, 'PROD-001')" class="w-full mt-4 bg-luxury-lightBg border border-luxury-beige text-luxury-black text-xs uppercase tracking-widest font-medium py-2.5 hover:bg-luxury-black hover:text-white hover:border-luxury-black transition-all duration-300">Add To Cart</button>
+                    <h3 class="font-serif text-base text-luxury-black tracking-wide">Luxury Linen Hijab Collection</h3>
+                    <p class="text-xs text-gold font-medium mt-1">৳ 850 BDT</p>
+                    <button onclick="addToCart('Luxury Linen Hijab Collection', 850)" class="w-full mt-4 bg-luxury-lightBg border border-luxury-beige text-luxury-black text-xs uppercase tracking-widest font-medium py-2.5 hover:bg-luxury-black hover:text-white hover:border-luxury-black transition-all duration-300">
+                        Add To Cart
+                    </button>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="group bg-white border border-luxury-beige p-4 transition-all duration-300 hover:shadow-sm">
+                    <div class="aspect-[3/4] w-full mb-4 overflow-hidden">
+    <img src="images/innerdress.jpg"
+         alt="Elegance Silhouette Inner Dress"
+         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
 </div>
-<div class="group bg-white border border-luxury-beige p-4 transition-all duration-300 hover:shadow-sm">
-<div class="aspect-[3/4] w-full mb-4 overflow-hidden"><img src="images/hijab.jpg" alt="Luxury Linen Hijab Collection" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"></div>
-<h3 class="font-serif text-base text-luxury-black tracking-wide">Luxury Linen Hijab Collection</h3>
-<p class="text-xs text-gold font-medium mt-1">৳ 850 BDT</p>
-<button onclick="addToCart('Luxury Linen Hijab Collection', 850, 'PROD-002')" class="w-full mt-4 bg-luxury-lightBg border border-luxury-beige text-luxury-black text-xs uppercase tracking-widest font-medium py-2.5 hover:bg-luxury-black hover:text-white hover:border-luxury-black transition-all duration-300">Add To Cart</button>
+                    <h3 class="font-serif text-base text-luxury-black tracking-wide">Elegance Silhouette Inner Dress</h3>
+                    <p class="text-xs text-gold font-medium mt-1">৳ 1,650 BDT</p>
+                    <button onclick="addToCart('Elegance Silhouette Inner Dress', 1650)" class="w-full mt-4 bg-luxury-lightBg border border-luxury-beige text-luxury-black text-xs uppercase tracking-widest font-medium py-2.5 hover:bg-luxury-black hover:text-white hover:border-luxury-black transition-all duration-300">
+                        Add To Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Organic Goods Category -->
+        <div id="organic" class="mb-24">
+            <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-luxury-beige pb-6 mb-10">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-gold font-semibold block mb-1">02 / Organic Essentials</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl tracking-wide uppercase">Inaya Mart Organics</h2>
+                </div>
+                <p class="text-xs text-gray-500 font-light max-w-xs mt-2 md:mt-0">100% pure premium natural items gathered responsibly.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product 4 -->
+                <div class="group bg-white border border-luxury-beige p-4 transition-all duration-300 hover:shadow-sm">
+                    <div class="aspect-square w-full mb-4 overflow-hidden">
+    <img src="images/honey.jpg"
+         alt="Pure Sundarban Premium Honey"
+         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
 </div>
-<div class="group bg-white border border-luxury-beige p-4 transition-all duration-300 hover:shadow-sm">
-<div class="aspect-[3/4] w-full mb-4 overflow-hidden"><img src="images/innerdress.jpg" alt="Elegance Silhouette Inner Dress" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"></div>
-<h3 class="font-serif text-base text-luxury-black tracking-wide">Elegance Silhouette Inner Dress</h3>
-<p class="text-xs text-gold font-medium mt-1">৳ 1,650 BDT</p>
-<button onclick="addToCart('Elegance Silhouette Inner Dress', 1650, 'PROD-003')" class="w-full mt-4 bg-luxury-lightBg border border-luxury-beige text-luxury-black text-xs uppercase tracking-widest font-medium py-2.5 hover:bg-luxury-black hover:text-white hover:border-luxury-black transition-all duration-300">Add To Cart</button>
+                    <h3 class="font-serif text-base text-luxury-black tracking-wide">Pure Sundarban Premium Honey</h3>
+                    <p class="text-xs text-gold font-medium mt-1">৳ 1,200 BDT</p>
+                    <button onclick="addToCart('Pure Sundarban Premium Honey', 1200)" class="w-full mt-4 bg-luxury-lightBg border border-luxury-beige text-luxury-black text-xs uppercase tracking-widest font-medium py-2.5 hover:bg-luxury-black hover:text-white hover:border-luxury-black transition-all duration-300">
+                        Add To Cart
+                    </button>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="group bg-white border border-luxury-beige p-4 transition-all duration-300 hover:shadow-sm">
+                    <div class="aspect-square w-full mb-4 overflow-hidden">
+    <img src="images/mustardoil.jpg"
+         alt="Cold Pressed Organic Mustard Oil"
+         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
 </div>
+                    <h3 class="font-serif text-base text-luxury-black tracking-wide">Cold Pressed Organic Mustard Oil</h3>
+                    <p class="text-xs text-gold font-medium mt-1">৳ 650 BDT</p>
+                    <button onclick="addToCart('Cold Pressed Organic Mustard Oil', 650)" class="w-full mt-4 bg-luxury-lightBg border border-luxury-beige text-luxury-black text-xs uppercase tracking-widest font-medium py-2.5 hover:bg-luxury-black hover:text-white hover:border-luxury-black transition-all duration-300">
+                        Add To Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Electronics Supplies Category -->
+        <div id="electronics" class="mb-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-luxury-beige pb-6 mb-10">
+                <div>
+                    <span class="text-xs uppercase tracking-widest text-gold font-semibold block mb-1">03 / Tech Supplies</span>
+                    <h2 class="font-serif text-2xl sm:text-3xl tracking-wide uppercase">Inaya Mart Electric</h2>
+                </div>
+                <p class="text-xs text-gray-500 font-light max-w-xs mt-2 md:mt-0">Premium smart electronics & reliable regular utilities.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product 6 -->
+                <div class="group bg-white border border-luxury-beige p-4 transition-all duration-300 hover:shadow-sm">
+                    <div class="aspect-video w-full mb-4 overflow-hidden">
+    <img src="images/earbuds.jpg"
+         alt="Premium Wireless ANC Earbuds"
+         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
 </div>
-</div>
-<div id="organic" class="mb-24">
-<div class="flex flex-col md:flex-row md:items-end justify-between border-b border-luxury-beige pb-6 mb-10">
-<div>
-<span class="text-xs uppercase tracking-widest text-gold font-semibold block mb-1">02 / Organic Essentials</span>
-<h2 class="font-serif text-2xl sm:text-3xl tracking-wide uppercase">Inaya Mart Organics</h2>
-</div>
-<p class="text-xs text-gray-500 font-light max-w-xs mt-2 md:mt-0">100% pure premium natural items gathered responsibly.</p>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-<div class="group bg-white border border-luxury-beige p-4 transition-all duration-300 hover:shadow-sm">
-<div class="aspect-square w-full mb-4 overflow-hidden"><img src="images/honey.jpg" alt="Pure Sundarban Premium Honey" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"></div>
-<h3 class="font-serif text-base text-luxury-black tracking-wide">Pure Sundarban Premium Honey</h3>
-<p class="text-xs text-gold font-medium mt-1">৳ 1,200 BDT</p>
-<button onclick="addToCart('Pure Sundarban Premium Honey', 1200, 'PROD-004')" class="w-full mt-4 bg-luxury-lightBg border border-luxury-beige text-luxury-black text-xs uppercase tracking-widest font-medium py-2.5 hover:bg-luxury-black hover:text-white hover:border-luxury-black transition-all duration-300">Add To Cart</button>
-</div>
-<div class="group bg-white border border-luxury-beige p-4 transition-all duration-300 hover:shadow-sm">
-<div class="aspect-square w-full mb-4 overflow-hidden"><img src="images/mustardoil.jpg" alt="Cold Pressed Organic Mustard Oil" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"></div>
-<h3 class="font-serif text-base text-luxury-black tracking-wide">Cold Pressed Organic Mustard Oil</h3>
-<p class="text-xs text-gold font-medium mt-1">৳ 650 BDT</p>
-<button onclick="addToCart('Cold Pressed Organic Mustard Oil', 650, 'PROD-005')" class="w-full mt-4 bg-luxury-lightBg border border-luxury-beige text-luxury-black text-xs uppercase tracking-widest font-medium py-2.5 hover:bg-luxury-black hover:text-white hover:border-luxury-black transition-all duration-300">Add To Cart</button>
-</div>
-</div>
-</div>
-<div id="electronics" class="mb-12">
-<div class="flex flex-col md:flex-row md:items-end justify-between border-b border-luxury-beige pb-6 mb-10">
-<div>
-<span class="text-xs uppercase tracking-widest text-gold font-semibold block mb-1">03 / Tech Supplies</span>
-<h2 class="font-serif text-2xl sm:text-3xl tracking-wide uppercase">Inaya Mart Electric</h2>
-</div>
-<p class="text-xs text-gray-500 font-light max-w-xs mt-2 md:mt-0">Premium smart electronics & reliable regular utilities.</p>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-<div class="group bg-white border border-luxury-beige p-4 transition-all duration-300 hover:shadow-sm">
-<div class="aspect-video w-full mb-4 overflow-hidden"><img src="images/earbuds.jpg" alt="Premium Wireless ANC Earbuds" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"></div>
-<h3 class="font-serif text-base text-luxury-black tracking-wide">Premium Wireless ANC Earbuds</h3>
-<p class="text-xs text-gold font-medium mt-1">৳ 2,890 BDT</p>
-<button onclick="addToCart('Premium Wireless ANC Earbuds', 2890, 'PROD-006')" class="w-full mt-4 bg-luxury-lightBg border border-luxury-beige text-luxury-black text-xs uppercase tracking-widest font-medium py-2.5 hover:bg-luxury-black hover:text-white hover:border-luxury-black transition-all duration-300">Add To Cart</button>
-</div>
-</div>
-</div>
-</main>
-<div id="cart-sidebar" class="fixed inset-0 z-50 overflow-hidden hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
-<div class="absolute inset-0 overflow-hidden">
-<div onclick="toggleCart(false)" class="absolute inset-0 bg-luxury-black/40 backdrop-blur-sm transition-opacity duration-500"></div>
-<div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-<div class="pointer-events-auto w-screen max-w-md bg-white border-l border-luxury-beige flex flex-col shadow-2xl">
-<div class="px-6 py-6 border-b border-luxury-beige flex items-center justify-between bg-luxury-lightBg">
-<h2 class="font-serif text-lg uppercase tracking-wide">Shopping Bag</h2>
-<button onclick="toggleCart(false)" class="p-2 text-gray-400 hover:text-luxury-black transition-colors"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg></button>
-</div>
-<div class="flex-1 overflow-y-auto px-6 py-6" id="cart-items-container">
-<div class="text-center text-sm text-gray-400 font-light py-20" id="empty-cart-msg">Your shopping bag is completely empty.</div>
-</div>
-<div class="border-t border-luxury-beige px-6 py-6 bg-luxury-lightBg">
-<div class="space-y-3 mb-6">
-<div class="flex justify-between text-xs tracking-wider uppercase"><span class="text-gray-500">Subtotal</span><span id="cart-subtotal" class="font-medium">৳ 0 BDT</span></div>
-<div class="flex justify-between text-xs tracking-wider uppercase"><span class="text-gray-500">Delivery Fee</span><span id="cart-delivery" class="font-medium">৳ 0 BDT</span></div>
-<div class="flex justify-between text-sm tracking-wide uppercase border-t border-gray-200 pt-3"><span class="font-semibold">Total Amount</span><span id="cart-total" class="font-bold text-gold-premium">৳ 0 BDT</span></div>
-</div>
-<div id="order-form" class="hidden space-y-3 transition-all duration-300 pt-2">
-<label class="block text-[10px] uppercase tracking-widest font-semibold text-gray-500">Shipping Information</label>
-<input type="text" id="cust-name" placeholder="Full Name" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
-<input type="tel" id="cust-phone" placeholder="Phone Number" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
-<input type="email" id="cust-email" placeholder="Email Address" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
-<textarea id="cust-address" placeholder="Full Delivery Address" rows="2" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold"></textarea>
-<select id="cust-location" onchange="updateTotalCosts()" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
-<option value="inside">Inside Dhaka (৳80)</option>
-<option value="outside">Outside Dhaka (৳150)</option>
-</select>
-<select id="cust-payment" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
-<option value="cod">Cash On Delivery</option>
-</select>
-<button id="submit-btn" onclick="processOrder()" class="w-full mt-4 bg-luxury-black text-white text-xs tracking-widest uppercase font-medium py-4 hover:bg-gold transition-all duration-300 disabled:opacity-50">Confirm Order</button>
-</div>
-<button id="checkout-btn" onclick="showOrderForm()" class="w-full bg-luxury-black text-white text-xs tracking-widest uppercase font-medium py-4 hover:bg-gold transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none" disabled>Proceed to Checkout</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="success-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-luxury-black/60 backdrop-blur-md hidden transition-opacity duration-500">
-<div class="bg-white border border-luxury-beige p-8 sm:p-12 max-w-md w-full text-center shadow-2xl relative">
-<div class="mb-6">
-<svg class="w-20 h-20 mx-auto" viewBox="0 0 52 52">
-<circle class="checkmark-circle" cx="26" cy="26" r="25" /><path class="checkmark-kick" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-</svg>
-</div>
-<h3 class="font-serif text-2xl uppercase tracking-wide text-luxury-black mb-3">🎉 ধন্যবাদ!</h3>
-<p class="text-sm text-gray-600 font-light leading-relaxed mb-6">আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে। 
-আমাদের প্রতিনিধি ২৪ ঘণ্টার মধ্যে যোগাযোগ করবেন।</p>
-<div class="bg-luxury-beige border border-gold/30 p-4 mb-6 text-left rounded-sm">
-<div class="flex justify-between text-xs uppercase tracking-wider mb-2"><span class="text-gray-500">Order ID:</span><span id="display-order-id" class="font-bold text-luxury-black"></span></div>
-<div class="flex justify-between text-xs uppercase tracking-wider border-t border-gray-200 pt-2 mt-2"><span class="text-gray-500">Total:</span><span id="display-total" class="font-bold text-luxury-black"></span></div>
-</div>
-<button onclick="closeSuccessModal()" class="w-full bg-luxury-black text-white text-xs tracking-widest uppercase font-medium py-3.5 hover:bg-gold transition-colors duration-300">Continue Shopping</button>
-</div>
-</div>
-<footer class="bg-luxury-black text-white border-t border-gold/20 pt-16 pb-12">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-gray-800 pb-12 mb-8">
-<div><h4 class="font-serif text-xl tracking-widest uppercase mb-4">Inaya Mart</h4><p class="text-xs text-gray-400 font-light leading-relaxed max-w-xs">Curating high-end clothing essentials, organic premium provisions, and functional tech accessories.</p></div>
-<div><h5 class="text-xs uppercase tracking-[0.2em] text-gold font-semibold mb-4">Brand Origin</h5><p class="text-xs text-gray-400 font-light leading-relaxed">Corporate Hub: Jatrabari, Dhaka, Bangladesh.</p></div>
-<div><h5 class="text-xs uppercase tracking-[0.2em] text-gold font-semibold mb-4">Customer Care</h5><p class="text-sm font-medium text-gold">Hotline: +880 1641910690</p></div>
-</div>
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-[11px] text-gray-500 font-light tracking-wider"><p>© 2026 Inaya Mart. All Rights Reserved.</p></div>
-</footer>
-<script>
-// Supabase Init
-const supabase = supabase.createClient('https://sqrxyxldarqzygaxzarr.supabase.co', 'sb_publishable_vIDIv6GJYgmou99PnrMb5A_y2l7s_-9');
-let cart = [];
-let isProcessing = false;
-function showToast(msg) {
-const toast = document.getElementById('toast');
-toast.innerText = msg;
-toast.classList.remove('hidden');
-setTimeout(() => toast.classList.add('show'), 10);
-setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.classList.add('hidden'), 300); }, 3000);
+                    <h3 class="font-serif text-base text-luxury-black tracking-wide">Premium Wireless ANC Earbuds</h3>
+                    <p class="text-xs text-gold font-medium mt-1">৳ 2,890 BDT</p>
+                    <button onclick="addToCart('Premium Wireless ANC Earbuds', 2890)" class="w-full mt-4 bg-luxury-lightBg border border-luxury-beige text-luxury-black text-xs uppercase tracking-widest font-medium py-2.5 hover:bg-luxury-black hover:text-white hover:border-luxury-black transition-all duration-300">
+                        Add To Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Slide-over Right Sidebar Shopping Cart -->
+    <div id="cart-sidebar" class="fixed inset-0 z-50 overflow-hidden hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+        <div class="absolute inset-0 overflow-hidden">
+            <!-- Overlay background -->
+            <div onclick="toggleCart(false)" class="absolute inset-0 bg-luxury-black/40 backdrop-blur-sm transition-opacity duration-500"></div>
+            
+            <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+                <div class="pointer-events-auto w-screen max-w-md bg-white border-l border-luxury-beige flex flex-col shadow-2xl">
+                    
+                    <!-- Cart Header -->
+                    <div class="px-6 py-6 border-b border-luxury-beige flex items-center justify-between bg-luxury-lightBg">
+                        <h2 class="font-serif text-lg uppercase tracking-wide">Shopping Bag</h2>
+                        <button onclick="toggleCart(false)" class="p-2 text-gray-400 hover:text-luxury-black transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+
+                    <!-- Cart Content (Dynamic Scroll Area) -->
+                    <div class="flex-1 overflow-y-auto px-6 py-6" id="cart-items-container">
+                        <!-- Dynamic items injected here via JS -->
+                        <div class="text-center text-sm text-gray-400 font-light py-20" id="empty-cart-msg">Your shopping bag is completely empty.</div>
+                    </div>
+
+                    <!-- Cart Footer / Order Placement Form -->
+                    <div class="border-t border-luxury-beige px-6 py-6 bg-luxury-lightBg">
+                        <div class="space-y-3 mb-6">
+                            <div class="flex justify-between text-xs tracking-wider uppercase">
+                                <span class="text-gray-500">Subtotal</span>
+                                <span id="cart-subtotal" class="font-medium">৳ 0 BDT</span>
+                            </div>
+                            <div class="flex justify-between text-xs tracking-wider uppercase">
+                                <span class="text-gray-500">Delivery Fee</span>
+                                <span id="cart-delivery" class="font-medium">৳ 0 BDT</span>
+                            </div>
+                            <div class="flex justify-between text-sm tracking-wide uppercase border-t border-gray-200 pt-3">
+                                <span class="font-semibold">Total Amount</span>
+                                <span id="cart-total" class="font-bold text-gold-premium">৳ 0 BDT</span>
+                            </div>
+                        </div>
+
+                        <!-- Single-Page Direct Order Submission Form -->
+                        <div id="order-form" class="hidden space-y-3 transition-all duration-300 pt-2">
+                            <label class="block text-[10px] uppercase tracking-widest font-semibold text-gray-500">Shipping Information</label>
+                            <input type="text" id="cust-name" placeholder="Full Name (আপনার নাম)" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
+                            <input type="tel" id="cust-phone" placeholder="Phone Number (মোবাইল নম্বর)" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
+                            <textarea id="cust-address" placeholder="Full Delivery Address (সম্পূর্ণ ঠিকানা এবং রোড নম্বর)" rows="2" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold"></textarea>
+                            
+                            <select id="cust-location" onchange="updateTotalCosts()" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
+                                <option value="inside">Inside Dhaka (ঢাকার ভেতরে) -80</option>
+                                <option value="outside">Outside Dhaka (ঢাকার বাইরে) - ৳150</option>
+                            </select>
+
+                            <button onclick="submitOrder()" class="w-full mt-4 bg-luxury-black text-white text-xs tracking-widest uppercase font-medium py-4 hover:bg-gold transition-all duration-300">
+                                Confirm Direct Order
+                            </button>
+                        </div>
+
+                        <button id="checkout-btn" onclick="showOrderForm()" class="w-full bg-luxury-black text-white text-xs tracking-widest uppercase font-medium py-4 hover:bg-gold transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none" disabled>
+                            Proceed to Checkout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Success Beautiful Pop-up Modal Window -->
+    <div id="success-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-luxury-black/60 backdrop-blur-md hidden transition-opacity duration-500">
+        <div class="bg-white border border-luxury-beige p-8 sm:p-12 max-w-md w-full text-center shadow-2xl relative reveal-up">
+            <!-- Elegant Checkmark Animation Container -->
+            <div class="mb-6">
+                <svg class="w-20 h-20 mx-auto" viewBox="0 0 52 52">
+                    <circle class="checkmark-circle" cx="26" cy="26" r="25" />
+                    <path class="checkmark-kick" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                </svg>
+            </div>
+            
+            <h3 class="font-serif text-2xl uppercase tracking-wide text-luxury-black mb-3">
+    🎉 ধন্যবাদ!
+</h3>
+
+<p class="text-sm text-gray-600 font-light leading-relaxed mb-6">
+    আপনার অর্ডারটি সফলভাবে গ্রহণ করা হয়েছে। <br><br>
+
+    📞 আমাদের প্রতিনিধি ২৪ ঘণ্টার মধ্যে আপনার সাথে যোগাযোগ করে অর্ডারটি নিশ্চিত করবেন। <br>
+    📦 অর্ডার নিশ্চিত হওয়ার পর দ্রুত আপনার ঠিকানায় পাঠিয়ে দেওয়া হবে। <br><br>
+
+    <strong>অনুগ্রহ করে আপনার মোবাইল ফোন সচল রাখুন।</strong><br>
+    Inaya Mart-এর সাথে থাকার জন্য আন্তরিক ধন্যবাদ। ❤️
+</p>
+            
+            <!-- Boxed Order Details Callout -->
+            <div class="bg-luxury-beige border border-gold/30 p-4 mb-6 text-left rounded-sm">
+                <div class="flex justify-between text-xs uppercase tracking-wider mb-2">
+                    <span class="text-gray-500">Order Status:</span>
+                    <span class="font-semibold text-green-600">Processing</span>
+                </div>
+                <div class="flex justify-between text-xs uppercase tracking-wider mb-2">
+                    <span class="text-gray-500">Order ID:</span>
+                    <span id="display-order-id" class="font-bold text-luxury-black">#IM-00000</span>
+                </div>
+                <div class="flex justify-between text-xs uppercase tracking-wider border-t border-gray-200 pt-2 mt-2">
+                    <span class="text-gray-500">Tracking URL:</span>
+                    <a href="#" id="display-order-link" class="font-medium text-gold underline hover:text-gold-dark transition-colors">Click to Track</a>
+                </div>
+            </div>
+
+            <button onclick="closeSuccessModal()" class="w-full bg-luxury-black text-white text-xs tracking-widest uppercase font-medium py-3.5 hover:bg-gold transition-colors duration-300">
+                Continue Shopping
+            </button>
+        </div>
+    </div>
+
+    <!-- Luxury Footer Section -->
+    <footer class="bg-luxury-black text-white border-t border-gold/20 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-12 border-b border-gray-800 pb-12 mb-8">
+            <div>
+                <h4 class="font-serif text-xl tracking-widest uppercase mb-4">Inaya Mart</h4>
+                <p class="text-xs text-gray-400 font-light leading-relaxed max-w-xs">
+                    Curating high-end clothing essentials, organic premium provisions, and functional tech accessories under a single unified benchmark of minimalist luxury.
+                </p>
+            </div>
+            <div>
+                <h5 class="text-xs uppercase tracking-[0.2em] text-gold font-semibold mb-4">Brand Origin</h5>
+                <p class="text-xs text-gray-400 font-light leading-relaxed">
+                    Corporate Hub: Jatrabari, Dhaka, Bangladesh.<br>
+                    Global Supply Chains: China & BD Quality Centers.
+                </p>
+            </div>
+            <div>
+                <h5 class="text-xs uppercase tracking-[0.2em] text-gold font-semibold mb-4">Customer Care</h5>
+                <p class="text-xs text-gray-400 font-light leading-relaxed mb-2">Dedicated 24/7 Digital Operations Desk</p>
+                <p class="text-sm font-medium text-gold">Hotline: +880 1641910690</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center text-[11px] text-gray-500 font-light tracking-wider">
+            <p>&copy; 2026 Inaya Mart Authority. All Rights Reserved fully.</p>
+            <p class="mt-2 sm:mt-0 uppercase">Minimalist Premium Interface Architecture</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Shopping Logic & Animations JavaScript Core -->
+    <script>
+    // Supabase Configuration
+    const SUPABASE_URL = "https://sqrxyxldarqzygaxzarr.supabase.co";
+
+    const SUPABASE_KEY = "sb_publishable_vIDIv6GJYgmou99PnrMb5A_y2l7s_-9";
+
+    const supabase = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+    
+        let cart = [];
+let shippingFee = 60;
+
+// Prevent duplicate order submission
+let isSubmitting = false;
+
+        function toggleCart(open) {
+            const sidebar = document.getElementById('cart-sidebar');
+            if (open) {
+                sidebar.classList.remove('hidden');
+            } else {
+                sidebar.classList.add('hidden');
+            }
+        }
+
+        function addToCart(name, price) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            
+            // Trigger temporary subtle bounce effect on the header cart button icon
+            const cartCountElement = document.getElementById('cart-count');
+            cartCountElement.parentElement.classList.add('cart-bounce');
+            setTimeout(() => {
+                cartCountElement.parentElement.classList.remove('cart-bounce');
+            }, 400);
+
+            renderCart();
+            toggleCart(true);
+        }
+
+        function updateQuantity(name, amount) {
+            const item = cart.find(item => item.name === name);
+            if (item) {
+                item.quantity += amount;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.name !== name);
+                }
+            }
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            const emptyMsg = document.getElementById('empty-cart-msg');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            const countBadge = document.getElementById('cart-count');
+            
+            // Calculate item quantities
+            let totalItems = cart.reduce((acc, current) => acc + current.quantity, 0);
+            countBadge.innerText = totalItems;
+
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center text-sm text-gray-400 font-light py-20" id="empty-cart-msg">Your shopping bag is completely empty.</div>`;
+                checkoutBtn.disabled = true;
+                document.getElementById('order-form').classList.add('hidden');
+                checkoutBtn.classList.remove('hidden');
+                updateTotalCosts();
+                return;
+            }
+
+            checkoutBtn.disabled = false;
+            container.innerHTML = '';
+            
+            cart.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'flex items-center justify-between border-b border-luxury-beige py-4 text-xs';
+                itemEl.innerHTML = `
+                    <div class="flex-1 pr-4">
+                        <h4 class="font-medium text-luxury-black">${item.name}</h4>
+                        <p class="text-gray-400 mt-0.5">৳ ${item.price} BDT</p>
+                    </div>
+                    <div class="flex items-center space-x-3 border border-luxury-beige bg-luxury-lightBg px-2 py-1">
+                        <button onclick="updateQuantity('${item.name}', -1)" class="hover:text-gold font-bold font-mono">-</button>
+                        <span class="font-medium">${item.quantity}</span>
+                        <button onclick="updateQuantity('${item.name}', 1)" class="hover:text-gold font-bold font-mono">+</button>
+                    </div>
+                `;
+                container.appendChild(itemEl);
+            });
+
+            updateTotalCosts();
+        }
+
+        function updateTotalCosts() {
+            const locationSelect = document.getElementById('cust-location');
+            shippingFee = locationSelect.value === 'inside' ? 60 : 110;
+
+            let subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            let total = subtotal > 0 ? (subtotal + shippingFee) : 0;
+
+            document.getElementById('cart-subtotal').innerText = `৳ ${subtotal} BDT`;
+            document.getElementById('cart-delivery').innerText = `৳ ${subtotal > 0 ? shippingFee : 0} BDT`;
+            document.getElementById('cart-total').innerText = `৳ ${total} BDT`;
+        }
+
+        function showOrderForm() {
+            document.getElementById('checkout-btn').classList.add('hidden');
+            document.getElementById('order-form').classList.remove('hidden');
+        }
+
+        function submitOrder() {
+
+    if (isSubmitting) return;
+    isSubmitting = true;
+
+    const name = document.getElementById('cust-name').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const address = document.getElementById('cust-address').value.trim();
+
+            if (!name || !phone || !address) {
+
+    isSubmitting = false;
+
+    alert(
+`⚠️ অসম্পূর্ণ তথ্য
+
+অর্ডার সম্পন্ন করতে নিচের তথ্যগুলো অবশ্যই পূরণ করুন।
+
+👤 পূর্ণ নাম
+📞 মোবাইল নম্বর
+📍 সম্পূর্ণ ডেলিভারি ঠিকানা
+
+সব তথ্য পূরণ করার পর আবার "Confirm Order" এ ক্লিক করুন।
+
+💛 ধন্যবাদ,
+Inaya Mart`
+    );
+
+    return;
 }
-function toggleCart(open) { document.getElementById('cart-sidebar').classList.toggle('hidden', !open); }
-function addToCart(name, price, id) {
-const existing = cart.find(i => i.name === name);
-if(existing) existing.quantity += 1;
-else cart.push({ name, price, id, quantity: 1 });
-document.getElementById('cart-count').innerText = cart.reduce((a,c) => a + c.quantity, 0);
+
+            // Generate high-end randomized order attributes
+            const randomOrderId = 'IM-' + Math.floor(10000 + Math.random() * 90000);
+            const mockTrackingUrl = 'https://inayamart.com/track?id=' + randomOrderId;
+
+            // Inject metrics inside full display success modal window popup
+            document.getElementById('display-order-id').innerText = '#' + randomOrderId;
+            document.getElementById('display-order-link').href = mockTrackingUrl;
+            document.getElementById('display-order-link').innerText = `inayamart.com/track?id=${randomOrderId}`;
+
+            // Trigger beautiful interactive display modal panel instantly
+            toggleCart(false);
+            const successModal = document.getElementById('success-modal');
+            successModal.classList.remove('hidden');
+            
+            // Clear current items safely
+cart = [];
 renderCart();
-toggleCart(true);
-}
-function renderCart() {
-const container = document.getElementById('cart-items-container');
-if(cart.length === 0) {
-container.innerHTML = <div class="text-center text-sm text-gray-400 font-light py-20">Your bag is empty.</div>;
-document.getElementById('checkout-btn').disabled = true;
-document.getElementById('order-form').classList.add('hidden');
-document.getElementById('checkout-btn').classList.remove('hidden');
-} else {
-container.innerHTML = '';
-cart.forEach(item => {
-const div = document.createElement('div');
-div.className = 'flex items-center justify-between border-b border-luxury-beige py-4 text-xs';
-div.innerHTML = <div class="flex-1 pr-4"><h4 class="font-medium">${item.name}</h4><p class="text-gray-400">৳ ${item.price}</p></div><div class="flex items-center space-x-3"><button onclick="updateQty('${item.name}', -1)" class="p-1 px-2 border">-</button><span>${item.quantity}</span><button onclick="updateQty('${item.name}', 1)" class="p-1 px-2 border">+</button></div>;
-container.appendChild(div);
-});
-document.getElementById('checkout-btn').disabled = false;
-}
-updateTotalCosts();
-}
-function updateQty(name, change) {
-const item = cart.find(i => i.name === name);
-if(item) {
-item.quantity += change;
-if(item.quantity <= 0) cart = cart.filter(i => i.name !== name);
-}
-renderCart();
-}
-function updateTotalCosts() {
-const loc = document.getElementById('cust-location').value;
-const fee = loc === 'inside' ? 80 : 150;
-const sub = cart.reduce((a,c) => a + (c.price * c.quantity), 0);
-document.getElementById('cart-subtotal').innerText = ৳ ${sub} BDT;
-document.getElementById('cart-delivery').innerText = ৳ ${sub > 0 ? fee : 0} BDT;
-document.getElementById('cart-total').innerText = ৳ ${sub > 0 ? sub + fee : 0} BDT;
-}
-function showOrderForm() {
-document.getElementById('checkout-btn').classList.add('hidden');
-document.getElementById('order-form').classList.remove('hidden');
-}
-async function processOrder() {
-if(isProcessing) return;
-const name = document.getElementById('cust-name').value.trim();
-const phone = document.getElementById('cust-phone').value.trim();
-const email = document.getElementById('cust-email').value.trim();
-const addr = document.getElementById('cust-address').value.trim();
-const loc = document.getElementById('cust-location').value;
-const pay = document.getElementById('cust-payment').value;
-if(!name || !phone || !addr || !/^(+88)?01\d{9}$/.test(phone)) {
-showToast("Please enter valid name, phone (01xxxxxxxxx), and address.");
-return;
-}
-isProcessing = true;
-const btn = document.getElementById('submit-btn');
-btn.disabled = true;
-btn.innerText = "Processing...";
-const orderId = 'INM-' + Math.floor(100000 + Math.random() * 900000);
-const total = cart.reduce((a,c) => a + (c.price * c.quantity), 0) + (loc === 'inside' ? 80 : 150);
-const orders = cart.map(item => ({
-customer_name: name, phone, email, address: addr, city: loc,
-product_name: item.name, product_id: item.id, quantity: item.quantity,
-unit_price: item.price, total_price: total, payment_method: pay,
-order_status: 'Pending', notes: Order ID: ${orderId}
-}));
-let success = false;
-for(let i=0; i<3; i++) {
-try {
-const { error } = await supabase.from('orders').insert(orders);
-if(!error) { success = true; break; }
-} catch(e) { console.error(e); }
-await new Promise(r => setTimeout(r, 1000));
-}
-if(success) {
-document.getElementById('display-order-id').innerText = orderId;
-document.getElementById('display-total').innerText = ৳ ${total} BDT;
-document.getElementById('success-modal').classList.remove('hidden');
-cart = []; renderCart();
+
+// Reset input values safely
 document.getElementById('cust-name').value = '';
 document.getElementById('cust-phone').value = '';
-document.getElementById('cust-email').value = '';
 document.getElementById('cust-address').value = '';
-toggleCart(false);
-} else {
-showToast("Order failed. Please try again.");
+
+isSubmitting = false;
 }
-isProcessing = false;
-btn.disabled = false;
-btn.innerText = "Confirm Order";
-}
-function closeSuccessModal() { document.getElementById('success-modal').classList.add('hidden'); }
-</script>
+
+        function closeSuccessModal() {
+            document.getElementById('success-modal').classList.add('hidden');
+        }
+    </script>
 </body>
 </html>

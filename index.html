@@ -623,8 +623,8 @@ const randomOrderId = 'IM-' + Math.floor(10000 + Math.random() * 90000);
 
 // Save order to Supabase
 // ১. ডেলিভারি চার্জ UI থেকে সংগ্রহ করুন
-const deliveryFeeText = document.getElementById('cart-delivery').innerText;
-const deliveryFee = parseInt(deliveryFeeText.replace(/[^0-9]/g, '')) || 0;
+const Delivery FeeText = document.getElementById('cart-delivery').innerText;
+const Delivery Fee = parseInt(Delivery FeeText.replace(/[^0-9]/g, '')) || 0;
 
 // ২. ডাটাবেজে সেভ করার অবজেক্ট তৈরি করুন
 const ordersData = cart.map(item => ({
@@ -636,8 +636,8 @@ const ordersData = cart.map(item => ({
     "Product id": item.id,
     "Quantity": item.quantity,
     "Unit price": item.price,
-    "Total price": (item.price * item.quantity) + deliveryFee, // এখানে ডেলিভারি ফি যুক্ত হয়েছে
-    "delivery_fee": deliveryFee, // এখানে নতুন কলামটি যুক্ত হয়েছে
+    "Total price": (item.price * item.quantity) + Delivery Fee, // এখানে ডেলিভারি ফি যুক্ত হয়েছে
+    "Delivery Fee": Delivery Fee, // এখানে নতুন কলামটি যুক্ত হয়েছে
     "Payment method": document.getElementById('payment-method')?.value || "COD",
     "Order status": "Pending"
 }));

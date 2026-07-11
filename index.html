@@ -481,37 +481,40 @@ let abandonedTimer;
     console.log("Add to cart:", name);
 
     const existingItem = cart.find(item => item.name === name);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-    id: id,
-    name: name,
-    price: price,
-    quantity: 1
-});
-            
-            // Trigger temporary subtle bounce effect on the header cart button icon
-            const cartCountElement = document.getElementById('cart-count');
-            cartCountElement.parentElement.classList.add('cart-bounce');
-            setTimeout(() => {
-                cartCountElement.parentElement.classList.remove('cart-bounce');
-            }, 400);
 
-            renderCart();
-            toggleCart(true);
-        }
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push({
+            id: id,
+            name: name,
+            price: price,
+            quantity: 1
+        });
+    }
 
-        function updateQuantity(name, amount) {
-            const item = cart.find(item => item.name === name);
-            if (item) {
-                item.quantity += amount;
-                if (item.quantity <= 0) {
-                    cart = cart.filter(i => i.name !== name);
-                }
-            }
-            renderCart();
+    // Trigger temporary subtle bounce effect on the header cart button icon
+    const cartCountElement = document.getElementById('cart-count');
+    cartCountElement.parentElement.classList.add('cart-bounce');
+
+    setTimeout(() => {
+        cartCountElement.parentElement.classList.remove('cart-bounce');
+    }, 400);
+
+    renderCart();
+    toggleCart(true);
+}
+
+function updateQuantity(name, amount) {
+    const item = cart.find(item => item.name === name);
+    if (item) {
+        item.quantity += amount;
+        if (item.quantity <= 0) {
+            cart = cart.filter(i => i.name !== name);
         }
+    }
+    renderCart();
+}
 
         function renderCart() {
             const container = document.getElementById('cart-items-container');

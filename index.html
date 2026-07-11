@@ -308,8 +308,8 @@
                                 <span id="cart-subtotal" class="font-medium">৳ 0 BDT</span>
                             </div>
                             <div class="flex justify-between text-xs tracking-wider uppercase">
-                                <span class="text-gray-500">Delivery Fee</span>
-                                <span id="cart-delivery" class="font-medium">৳ 0 BDT</span>
+                                <span class="text-gray-500">delivery_fee</span>
+                                <span id="cart-delivery_fee" class="font-medium">৳ 0 BDT</span>
                             </div>
                             <div class="flex justify-between text-sm tracking-wide uppercase border-t border-gray-200 pt-3">
                                 <span class="font-semibold">Total Amount</span>
@@ -539,7 +539,7 @@ function updateQuantity(name, amount) {
             let total = subtotal > 0 ? (subtotal + shippingFee) : 0;
 
             document.getElementById('cart-subtotal').innerText = `৳ ${subtotal} BDT`;
-            document.getElementById('cart-delivery').innerText = `৳ ${subtotal > 0 ? shippingFee : 0} BDT`;
+            document.getElementById('cart-delivery_fee').innerText = `৳ ${subtotal > 0 ? shippingFee : 0} BDT`;
             document.getElementById('cart-total').innerText = `৳ ${total} BDT`;
         }
 
@@ -622,11 +622,6 @@ const randomOrderId = 'IM-' + Math.floor(10000 + Math.random() * 90000);
 
 
 // Save order to Supabase
-// ১. ডেলিভারি চার্জ UI থেকে সংগ্রহ করুন
-const Delivery FeeText = document.getElementById('cart-delivery').innerText;
-const Delivery Fee = parseInt(Delivery FeeText.replace(/[^0-9]/g, '')) || 0;
-
-// ২. ডাটাবেজে সেভ করার অবজেক্ট তৈরি করুন
 const ordersData = cart.map(item => ({
     "Order Id": randomOrderId,
     "Customer name": name,
@@ -636,13 +631,11 @@ const ordersData = cart.map(item => ({
     "Product id": item.id,
     "Quantity": item.quantity,
     "Unit price": item.price,
-    "Total price": (item.price * item.quantity) + Delivery Fee, // এখানে ডেলিভারি ফি যুক্ত হয়েছে
-    "Delivery Fee": Delivery Fee, // এখানে নতুন কলামটি যুক্ত হয়েছে
+    "Total price": item.price * item.quantity,
     "Payment method": document.getElementById('payment-method')?.value || "COD",
     "Order status": "Pending"
 }));
 
-// ৩. Supabase-এ ইনসার্ট করুন
 const { data, error } = await supabaseClient
     .from('orders')
     .insert(ordersData);
@@ -653,7 +646,6 @@ if (error) {
     isSubmitting = false;
     return;
 }
-
 
 console.log("Order Saved:", data);
 
@@ -771,13 +763,13 @@ renderCart();
 
         // ২. ডেলিভারি চার্জ নির্ধারণ করুন
         const location = document.getElementById('cust-location').value;
-        const deliveryFee = (location === 'inside') ? 80 : 150;
+        const delivery_fee = (location === 'inside') ? 80 : 150;
 
         // ৩. UI আপডেট করুন
-        document.getElementById('cart-delivery').innerText = '৳ ' + deliveryFee + ' BDT';
+        document.getElementById('cart-delivery').innerText = '৳ ' + delivery_fee + ' BDT';
 
         // ৪. টোটাল অ্যামাউন্ট আপডেট করুন
-        const total = subtotalValue + deliveryFee;
+        const total = subtotalValue + delivery_fee;
         document.getElementById('cart-total').innerText = '৳ ' + total + ' BDT';
     }
 

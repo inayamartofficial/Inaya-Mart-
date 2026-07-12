@@ -602,9 +602,9 @@ async function submitOrder() {
     // অর্ডার ডাটা প্রস্তুত করা[span_3](start_span)[span_3](end_span)
     const randomOrderId = 'IM-' + Math.floor(10000 + Math.random() * 90000);
     const ordersData = cart.map(item => ({
-        "Order Id": randomOrderId,
+        "order_id": randomOrderId,
         "Customer name": name,
-        "Phone": phone,
+        "Phone Number": phone,
         "Address": address,
         "Product name": item.name,
         "Product id": item.id,

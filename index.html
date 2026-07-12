@@ -716,35 +716,35 @@ renderCart();
     
    <script>
     function updateTotalCosts() {
-    // ১. সাবটোটাল
-    const subtotalValue = 2450; 
+        // ১. কার্ট থেকে আসল সাবটোটাল হিসাব করা (Hardcoded 2450 বাদ দেওয়া হয়েছে)
+        const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-    // ২. লোকেশন চেক করুন (যদি না থাকে তবে 'inside' ধরুন)
-    const locationElement = document.getElementById('cust-location');
-    const location = locationElement ? locationElement.value : 'inside';
-    
-    // ৩. ডেলিভারি চার্জ নির্ধারণ
-    const delivery_fee = (location === 'inside') ? 80 : 150;
+        // ২. লোকেশন চেক করা
+        const locationElement = document.getElementById('cust-location');
+        const location = locationElement ? locationElement.value : 'inside';
+        
+        // ৩. ডেলিভারি চার্জ নির্ধারণ (কার্টে পণ্য থাকলে হিসাব করবে, নাহলে ০)
+        const delivery_fee = (subtotal > 0) ? ((location === 'outside') ? 150 : 80) : 0;
 
-    // ৪. UI আপডেট করুন (এলিমেন্ট আছে কিনা চেক করে)
-    const deliveryElement = document.getElementById('cart-delivery');
-    if (deliveryElement) {
-        deliveryElement.innerText = '৳ ' + delivery_fee + ' BDT';
+        // ৪. UI আপডেট করা (সঠিক আইডি ব্যবহার করা হয়েছে)
+        const subtotalElement = document.getElementById('cart-subtotal');
+        if (subtotalElement) subtotalElement.innerText = `৳ ${subtotal} BDT`;
+
+        const deliveryElement = document.getElementById('cart-delivery_fee'); // আপনার HTML এর সাথে মিল রেখে আইডি ঠিক করা হয়েছে
+        if (deliveryElement) deliveryElement.innerText = `৳ ${delivery_fee} BDT`;
+
+        const totalElement = document.getElementById('cart-total');
+        if (totalElement) {
+            const total = subtotal + delivery_fee;
+            totalElement.innerText = `৳ ${total} BDT`;
+        }
     }
 
-    const totalElement = document.getElementById('cart-total');
-    if (totalElement) {
-        const total = subtotalValue + delivery_fee;
-        totalElement.innerText = '৳ ' + total + ' BDT';
-    }
-}
+    // লোকেশন ড্রপডাউনে পরিবর্তন হলে যেন সাথে সাথে দাম আপডেট হয়
+    document.getElementById('cust-location')?.addEventListener('change', updateTotalCosts);
 
-// পেজ লোড হওয়ার পর রান করুন
-document.addEventListener('DOMContentLoaded', updateTotalCosts);
-
-
-    // পেজ লোড হওয়ার সময় একবার রান করার জন্য
-    window.onload = updateTotalCosts;
+    // পেজ লোড হওয়ার পর রান করুন
+    document.addEventListener('DOMContentLoaded', updateTotalCosts);
 </script>
 </body>
 </html> 

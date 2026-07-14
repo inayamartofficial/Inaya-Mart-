@@ -1,0 +1,18 @@
+:root {
+  --primary-gold: #D4AF37;
+  --bg-black: #000000;
+  --bg-nude: #F5F5DC;
+  --bg-champagne: #F7E7CE;
+  --text-beige: #D2B48C;
+}
+
+body {
+  background-color: var(--bg-nude);
+  color: var(--bg-black);
+  font-family: 'Arial', sans-serif;
+}
+
+h1, h2 {
+  color: var(--primary-gold);
+}
+

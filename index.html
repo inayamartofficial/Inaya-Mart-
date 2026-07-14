@@ -277,71 +277,73 @@
         </div>
     </main>
 
-    <!-- Slide-over Right Sidebar Shopping Cart -->
-    <div id="cart-sidebar" class="fixed inset-0 z-50 overflow-hidden hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
-        <div class="absolute inset-0 overflow-hidden">
-            <!-- Overlay background -->
-            <div onclick="toggleCart(false)" class="absolute inset-0 bg-luxury-black/40 backdrop-blur-sm transition-opacity duration-500"></div>
-            
-            <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-                <div class="pointer-events-auto w-screen max-w-md bg-white border-l border-luxury-beige flex flex-col shadow-2xl">
-                    
-                    <!-- Cart Header -->
-                    <div class="px-6 py-6 border-b border-luxury-beige flex items-center justify-between bg-luxury-lightBg">
-                        <h2 class="font-serif text-lg uppercase tracking-wide">Shopping Bag</h2>
-                        <button onclick="toggleCart(false)" class="p-2 text-gray-400 hover:text-luxury-black transition-colors">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+   <!-- Slide-over Right Sidebar Shopping Cart -->
+<div id="cart-sidebar" class="fixed inset-0 z-50 overflow-hidden hidden" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+    <div class="absolute inset-0 overflow-hidden">
+        <!-- Overlay background -->
+        <div onclick="toggleCart(false)" class="absolute inset-0 bg-luxury-black/40 backdrop-blur-sm transition-opacity duration-500"></div>
+        
+        <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+            <div class="pointer-events-auto w-screen max-w-md bg-white border-l border-luxury-beige flex flex-col shadow-2xl">
+                
+                <!-- Cart Header -->
+                <div class="px-6 py-6 border-b border-luxury-beige flex items-center justify-between bg-luxury-lightBg">
+                    <h2 class="font-serif text-lg uppercase tracking-wide">Shopping Bag</h2>
+                    <button onclick="toggleCart(false)" class="p-2 text-gray-400 hover:text-luxury-black transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+
+                <!-- Cart Content (Dynamic Scroll Area) -->
+                <div class="flex-1 overflow-y-auto px-6 py-6" id="cart-items-container">
+                    <div class="text-center text-sm text-gray-400 font-light py-20" id="empty-cart-msg">Your shopping bag is completely empty.</div>
+                </div>
+
+                <!-- Cart Footer / Order Placement Form -->
+                <div class="border-t border-luxury-beige px-6 py-6 bg-luxury-lightBg">
+                    <div class="space-y-4 mb-6">
+                        <!-- Subtotal -->
+                        <div class="flex justify-between text-sm tracking-wider uppercase">
+                            <span class="text-gray-900 font-semibold">Subtotal</span>
+                            <span id="cart-subtotal" class="font-bold text-black">৳ 0 BDT</span>
+                        </div>
+                        <!-- Delivery Fee -->
+                        <div class="flex justify-between text-sm tracking-wider uppercase">
+                            <span class="text-gray-900 font-semibold">Delivery Fee</span>
+                            <span id="cart-delivery_fee" class="font-bold text-black">৳ 0 BDT</span>
+                        </div>
+                        <!-- Total Amount -->
+                        <div class="flex justify-between text-base tracking-wide uppercase border-t border-gray-300 pt-3">
+                            <span class="font-extrabold text-black">Total Amount</span>
+                            <span id="cart-total" class="font-bold text-black">৳ 0 BDT</span>
+                        </div>
+                    </div>
+
+                    <!-- Single-Page Direct Order Submission Form -->
+                    <div id="order-form" class="hidden space-y-3 transition-all duration-300 pt-2">
+                        <label class="block text-[10px] uppercase tracking-widest font-semibold text-gray-500">Shipping Information</label>
+                        <input type="text" id="cust-name" placeholder="Full Name (আপনার নাম)" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
+                        <input type="tel" id="cust-phone" placeholder="Phone Number (মোবাইল নম্বর)" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
+                        <textarea id="cust-address" placeholder="Full Delivery Address (সম্পূর্ণ ঠিকানা)" rows="2" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold"></textarea>
+                        
+                        <select id="cust-location" onchange="updateTotalCosts()" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
+                            <option value="inside">Inside Dhaka (ঢাকার ভেতরে) - ৳80</option>
+                            <option value="outside">Outside Dhaka (ঢাকার বাইরে) - ৳150</option>
+                        </select>
+
+                        <button onclick="submitOrder()" class="w-full mt-4 bg-luxury-black text-white text-xs tracking-widest uppercase font-medium py-4 hover:bg-gold transition-all duration-300">
+                            Confirm Direct Order
                         </button>
                     </div>
 
-                    <!-- Cart Content (Dynamic Scroll Area) -->
-                    <div class="flex-1 overflow-y-auto px-6 py-6" id="cart-items-container">
-                        <!-- Dynamic items injected here via JS -->
-                        <div class="text-center text-sm text-gray-400 font-light py-20" id="empty-cart-msg">Your shopping bag is completely empty.</div>
-                    </div>
-
-                    <!-- Cart Footer / Order Placement Form -->
-                    <div class="border-t border-luxury-beige px-6 py-6 bg-luxury-lightBg">
-                        <div class="space-y-3 mb-6">
-                            <div class="flex justify-between text-xs tracking-wider uppercase">
-                                <span class="text-gray-500">Subtotal</span>
-                                <span id="cart-subtotal" class="font-medium">৳ 0 BDT</span>
-                            </div>
-                            <div class="flex justify-between text-xs tracking-wider uppercase">
-                                <span class="text-gray-500">delivery_fee</span>
-                                <span id="cart-delivery_fee" class="font-medium">৳ 0 BDT</span>
-                            </div>
-                            <div class="flex justify-between text-sm tracking-wide uppercase border-t border-gray-200 pt-3">
-                                <span class="font-semibold">Total Amount</span>
-                                <span id="cart-total" class="font-bold text-gold-premium">৳ 0 BDT</span>
-                            </div>
-                        </div>
-
-                        <!-- Single-Page Direct Order Submission Form -->
-                        <div id="order-form" class="hidden space-y-3 transition-all duration-300 pt-2">
-                            <label class="block text-[10px] uppercase tracking-widest font-semibold text-gray-500">Shipping Information</label>
-                            <input type="text" id="cust-name" placeholder="Full Name (আপনার নাম)" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
-                            <input type="tel" id="cust-phone" placeholder="Phone Number (মোবাইল নম্বর)" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
-                            <textarea id="cust-address" placeholder="Full Delivery Address (সম্পূর্ণ ঠিকানা এবং রোড নম্বর)" rows="2" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold"></textarea>
-                            
-                            <select id="cust-location" onchange="updateTotalCosts()" class="w-full bg-white border border-luxury-beige text-xs p-3 focus:outline-none focus:border-gold">
-                                <option value="inside">Inside Dhaka (ঢাকার ভেতরে)80</option>
-                                <option value="outside">Outside Dhaka (ঢাকার বাইরে) - ৳150</option>
-                            </select>
-
-                            <button onclick="submitOrder()" class="w-full mt-4 bg-luxury-black text-white text-xs tracking-widest uppercase font-medium py-4 hover:bg-gold transition-all duration-300">
-                                Confirm Direct Order
-                            </button>
-                        </div>
-
-                        <button id="checkout-btn" onclick="showOrderForm()" class="w-full bg-luxury-black text-white text-xs tracking-widest uppercase font-medium py-4 hover:bg-gold transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none" disabled>
-                            Proceed to Checkout
-                        </button>
-                    </div>
+                    <button id="checkout-btn" onclick="showOrderForm()" class="w-full bg-luxury-black text-white text-xs tracking-widest uppercase font-medium py-4 hover:bg-gold transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none" disabled>
+                        Proceed to Checkout
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Order Success Beautiful Pop-up Modal Window -->
     <div id="success-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-luxury-black/60 backdrop-blur-md hidden transition-opacity duration-500">

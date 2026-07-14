@@ -1,0 +1,35 @@
+/* Minimalist Luxury Brand Theme */
+:root {
+  --gold: #D4AF37;
+  --black: #000000;
+  --nude: #E6D2C4;
+  --champagne: #F7E7CE;
+  --beige: #D2B48C;
+}
+
+body {
+  background-color: var(--champagne); /* ব্যাকগ্রাউন্ডে শ্যাম্পেন কালার */
+  color: var(--black);
+  font-family: 'Helvetica', sans-serif; /* ক্লিন ফন্ট */
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3 {
+  color: var(--gold); /* গোল্ড কালার টেক্সট */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+button {
+  background-color: var(--black);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 10px 20px;
+}
+
+button:hover {
+  background-color: var(--gold);
+  color: var(--black);
+}
+
